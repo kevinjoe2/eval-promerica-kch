@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: kechodev/eval-promerica-kch:latest
+        image: kechodev/eval-promerica-kch:0.0.1
         ports:
         - containerPort: 8080
