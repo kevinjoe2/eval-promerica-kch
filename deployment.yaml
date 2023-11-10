@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eval-promerica-kch-deployment
+  labels:
+    app: eval-promerica-kch-api
+spec:
+  selector:
+    matchLabels:
+      app: eval-promerica-kch-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: eval-promerica-kch-api
+    spec:
+      containers:
+      - name: nginx
+        image: kechodev/eval-promerica-kch:latest
+        ports:
+        - containerPort: 8080
