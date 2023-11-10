@@ -27,43 +27,54 @@ import java.util.stream.Collectors;
 public class WeatherService {
 
     private final WeatherRepository weatherRepository;
+
     private final RestTemplate restTemplate;
 
     @Value("${application.open-weather.api-key}")
     private String openWeatherApiKey;
 
-    @Value("${application.open-weather.api-key}")
+    @Value("${application.open-weather.uri}")
     private String openWeatherUri;
 
     public ConditionResponseVo findConditions(ConditionRequestVo conditionRequestVo) {
+        log.info("** WeatherService.findConditions {}", conditionRequestVo);
         Optional<WeatherHistoryEntity> weatherEntity = weatherRepository.findByLatAndLon(conditionRequestVo.getLat(), conditionRequestVo.getLon());
         LocalDateTime currentDateTimeMinus10Minutes = LocalDateTime.now().minusMinutes(10);
         if (weatherEntity.isPresent() && weatherEntity.get().getCreated().isAfter(currentDateTimeMinus10Minutes)) {
+            log.info("** WeatherService.findConditions find weather in data base available");
             return mapToConditionResponseVo(weatherEntity.get());
         }
-
         WeatherApiResponseVo result = findWeatherByLatAndLon(conditionRequestVo);
         WeatherHistoryEntity entity = mapToWeatherHistoryEntity(result);
+        log.info("** WeatherService.findConditions saving weather in data base");
         WeatherHistoryEntity entitySaved = weatherRepository.save(entity);
+        log.info("** WeatherService.findConditions mapping to vo");
         return mapToConditionResponseVo(entitySaved);
     }
 
     private WeatherApiResponseVo findWeatherByLatAndLon(ConditionRequestVo conditionRequestVo){
+        log.info("** WeatherService.findWeatherByLatAndLon {}", conditionRequestVo);
+        ResponseEntity<WeatherApiResponseVo> response;
         try {
-            ResponseEntity<WeatherApiResponseVo> response = restTemplate.getForEntity(
+            log.info("** WeatherService.findWeatherByLatAndLon connecting with open weather");
+            response = restTemplate.getForEntity(
                     String.format(openWeatherUri, conditionRequestVo.getLat(), conditionRequestVo.getLon(), openWeatherApiKey),
                     WeatherApiResponseVo.class
             );
-            if (response.getStatusCode().equals(HttpStatus.OK) && Objects.nonNull(response.getBody())) {
-                return response.getBody();
-            }
-            throw new ApiException(HttpStatus.valueOf(response.getStatusCode().value()), List.of("Unexpected exception"));
         } catch (Exception ex) {
-            throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, List.of("Api not found coordinates"));
+            log.error("Could not connect with open weather", ex);
+            throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, List.of("Could not connect with open weather."));
         }
+        if (response.getStatusCode().equals(HttpStatus.OK) && Objects.nonNull(response.getBody())) {
+            log.info("** WeatherService.findWeatherByLatAndLon Success");
+            return response.getBody();
+        }
+        log.error("Open weather's response is invalid {}", response);
+        throw new ApiException(HttpStatus.valueOf(response.getStatusCode().value()), List.of("Open weather's response is invalid"));
     }
 
     private WeatherHistoryEntity mapToWeatherHistoryEntity(WeatherApiResponseVo apiResponseVo){
+        log.info("** WeatherService.mapToWeatherHistoryEntity {}", apiResponseVo);
         if (Objects.nonNull(apiResponseVo)) {
             String weather = apiResponseVo.getWeather().stream()
                     .map(WeatherApiResponseVo.Weather::getMain)
@@ -78,10 +89,12 @@ public class WeatherService {
             entity.setLon(BigDecimal.valueOf(apiResponseVo.getCoord().getLon()));
             return entity;
         }
+        log.error("Error mapToWeatherHistoryEntity");
         throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, List.of("Error mapToWeatherHistoryEntity"));
     }
 
     private ConditionResponseVo mapToConditionResponseVo(WeatherHistoryEntity entity){
+        log.info("** WeatherService.mapToConditionResponseVo {}", entity);
         return ConditionResponseVo.builder()
                 .weather(entity.getWeather())
                 .tempMin(entity.getTempMin())
