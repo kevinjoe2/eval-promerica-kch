@@ -1,2 +1,1 @@
---INSERT INTO users (id, name) VALUES (1, 'USA');
---INSERT INTO tokens (id, name) VALUES (1, 'USA');
+insert into users (email,firstname,lastname,password,role,id) values ('kevin.j03@hotmail.com','Kevin','Chamorro','password','USER','81af0a85-e832-4162-9df2-23f798c06caa');
