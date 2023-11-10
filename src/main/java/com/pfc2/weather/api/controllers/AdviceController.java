@@ -2,6 +2,7 @@ package com.pfc2.weather.api.controllers;
 
 import com.pfc2.weather.api.exceptions.ApiException;
 import com.pfc2.weather.api.vos.ErrorVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,10 +13,12 @@ import java.util.List;
 import java.util.Objects;
 
 @RestControllerAdvice
+@Slf4j
 public class AdviceController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorVo> handleApiException(ApiException apiException) {
+        log.error("*** AdviceController.handleApiException", apiException);
         return ResponseEntity.badRequest().body(ErrorVo.builder()
                 .code(apiException.getHttpStatus().getReasonPhrase())
                 .errors(apiException.getMessages())
@@ -24,6 +27,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorVo> handleExpiredJwtException(RuntimeException runtimeException) {
+        log.error("*** AdviceController.handleExpiredJwtException", runtimeException);
         if (runtimeException.getCause() instanceof ApiException apiException) {
             return ResponseEntity.badRequest().body(ErrorVo.builder()
                     .code(apiException.getHttpStatus().getReasonPhrase())
@@ -39,6 +43,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorVo> handleException(Exception exception) {
+        log.error("*** AdviceController.handleException", exception);
         if (exception.getCause() instanceof ApiException apiException) {
             return ResponseEntity.badRequest().body(ErrorVo.builder()
                     .code(apiException.getHttpStatus().getReasonPhrase())

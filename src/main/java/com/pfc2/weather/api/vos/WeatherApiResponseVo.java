@@ -2,18 +2,30 @@ package com.pfc2.weather.api.vos;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class WeatherApiResponseVo {
+public class WeatherApiResponseVo implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1905122041950251208L;
+
     @Data
-    public static class Coord {
+    public static class Coord implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 1905122041950251208L;
         private double lon;
         private double lat;
     }
 
     @Data
-    public static class Weather {
+    public static class Weather implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 1905122041950251208L;
         private int id;
         private String main;
         private String description;
@@ -21,7 +33,10 @@ public class WeatherApiResponseVo {
     }
 
     @Data
-    public static class Main {
+    public static class Main implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 1905122041950251208L;
         private double temp;
         private double feels_like;
         private double temp_min;
@@ -33,19 +48,28 @@ public class WeatherApiResponseVo {
     }
 
     @Data
-    public static class Wind {
+    public static class Wind implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 1905122041950251208L;
         private double speed;
         private int deg;
         private double gust;
     }
 
     @Data
-    public static class Clouds {
+    public static class Clouds implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 1905122041950251208L;
         private int all;
     }
 
     @Data
-    public static class Sys {
+    public static class Sys implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 1905122041950251208L;
         private String country;
         private long sunrise;
         private long sunset;

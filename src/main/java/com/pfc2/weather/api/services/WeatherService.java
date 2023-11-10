@@ -79,15 +79,15 @@ public class WeatherService {
             String weather = apiResponseVo.getWeather().stream()
                     .map(WeatherApiResponseVo.Weather::getMain)
                     .collect(Collectors.joining());
-            WeatherHistoryEntity entity = new WeatherHistoryEntity();
-            entity.setCreated(LocalDateTime.now());
-            entity.setWeather(weather);
-            entity.setTempMax(BigDecimal.valueOf(apiResponseVo.getMain().getTemp_max()));
-            entity.setTempMin(BigDecimal.valueOf(apiResponseVo.getMain().getTemp_min()));
-            entity.setHumidity(BigDecimal.valueOf(apiResponseVo.getMain().getHumidity()));
-            entity.setLat(BigDecimal.valueOf(apiResponseVo.getCoord().getLat()));
-            entity.setLon(BigDecimal.valueOf(apiResponseVo.getCoord().getLon()));
-            return entity;
+            return WeatherHistoryEntity.builder()
+                    .created(LocalDateTime.now())
+                    .weather(weather)
+                    .tempMax(BigDecimal.valueOf(apiResponseVo.getMain().getTemp_max()))
+                    .tempMin(BigDecimal.valueOf(apiResponseVo.getMain().getTemp_min()))
+                    .humidity(BigDecimal.valueOf(apiResponseVo.getMain().getHumidity()))
+                    .lat(BigDecimal.valueOf(apiResponseVo.getCoord().getLat()))
+                    .lon(BigDecimal.valueOf(apiResponseVo.getCoord().getLon()))
+                    .build();
         }
         log.error("Error mapToWeatherHistoryEntity");
         throw new ApiException(HttpStatus.SERVICE_UNAVAILABLE, List.of("Error mapToWeatherHistoryEntity"));
@@ -101,5 +101,11 @@ public class WeatherService {
                 .tempMax(entity.getTempMax())
                 .humidity(entity.getHumidity())
                 .build();
+    }
+
+    public List<ConditionResponseVo> findWeatherHistory(){
+        log.info("*** WeatherService.findWeatherHistory");
+        List<WeatherHistoryEntity> result = weatherRepository.findAll();
+        return result.stream().map(this::mapToConditionResponseVo).toList();
     }
 }

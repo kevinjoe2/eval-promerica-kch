@@ -1,17 +1,26 @@
 package com.pfc2.weather.api.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "weathers_history")
-@Getter
-@Setter
-public class WeatherHistoryEntity {
+public class WeatherHistoryEntity implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1905122041950251208L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

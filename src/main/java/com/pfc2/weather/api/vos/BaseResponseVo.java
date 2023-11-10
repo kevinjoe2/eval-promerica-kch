@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,5 +16,6 @@ public class BaseResponseVo<T extends Serializable> implements Serializable {
 
     private String statusCode;
     private T data;
+    private List<T> dataList;
 
 }

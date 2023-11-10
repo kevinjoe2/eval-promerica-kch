@@ -12,13 +12,12 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
-@Builder
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserEntity implements UserDetails, Serializable {
 
     @Serial

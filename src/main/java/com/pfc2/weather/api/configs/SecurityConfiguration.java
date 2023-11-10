@@ -22,8 +22,9 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
             "/api/v1/auth/**",
-            "/api/v1/weathers/**",
-            "/context-path/**"};
+            "/sys/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**"};
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
@@ -31,9 +32,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.anyRequest().permitAll()
-                        /*req.requestMatchers(WHITE_LIST_URL).permitAll()
-                        .anyRequest().authenticated()*/)
+                        req.requestMatchers(WHITE_LIST_URL).permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
