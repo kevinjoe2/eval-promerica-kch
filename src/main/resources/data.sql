@@ -1,0 +1,2 @@
+--INSERT INTO users (id, name) VALUES (1, 'USA');
+--INSERT INTO tokens (id, name) VALUES (1, 'USA');

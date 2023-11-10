@@ -1,0 +1,27 @@
+---
+spring:
+  datasource:
+    url: jdbc:h2:file:/data/api
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+---
+application:
+  open-weather:
+    api-key: d669ad83acd01833d9545c9136c7dbaf
+    uri: https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&appid=%s
+  security:
+    jwt:
+      secret-key: 0a32dc64952e6a9a6de1c49a00fe2ff2d987cee244618df77753923fb39f8119
+      expiration: 86400000 # one day
+      refresh-token:
+        expiration: 604800000 # 7 days
