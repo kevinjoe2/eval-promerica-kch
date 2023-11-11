@@ -1,5 +1,6 @@
 package com.pfc2.weather.api.configs;
 
+import com.pfc2.weather.api.repositories.TokenRepository;
 import com.pfc2.weather.api.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,6 +26,7 @@ import static com.pfc2.weather.api.utils.ConstantUtil.NUMBER_START_AUTH_TOKEN;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final TokenRepository tokenRepository;
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -33,21 +35,29 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String userMail;
-        if (Objects.isNull(authHeader) || !authHeader.startsWith("Bearer ")){
+        if (request.getServletPath().contains("/api/v1/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
-        jwt = authHeader.substring(NUMBER_START_AUTH_TOKEN);
-        userMail = jwtService.extractUsername(jwt);
-        if (Objects.nonNull(userMail) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())){
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userMail);
-            if (Objects.nonNull(userDetails) && jwtService.isTokenValid(jwt, userDetails)) {
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        final String userEmail;
+        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        jwt = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(jwt);
+        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            boolean isTokenValid = tokenRepository.findByToken(jwt)
+                    .map(t -> !t.isExpired() && !t.isRevoked())
+                    .orElse(false);
+            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
                 );
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)

@@ -52,16 +52,16 @@ public class WeatherController {
 
     private void findValidate(ConditionRequestVo conditionRequestVo){
         if (conditionRequestVo.getLat().compareTo(BigDecimal.valueOf(-90)) < 0) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, List.of("Error in input parameters"));
+            throw new ApiException(HttpStatus.BAD_REQUEST, List.of("Latitude cannot be less than -90."));
         }
         if (conditionRequestVo.getLon().compareTo(BigDecimal.valueOf(-180)) < 0) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, List.of("Error in input parameters"));
+            throw new ApiException(HttpStatus.BAD_REQUEST, List.of("Length cannot be less than -180."));
         }
         if (conditionRequestVo.getLat().compareTo(BigDecimal.valueOf(90)) > 0) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, List.of("Error in input parameters"));
+            throw new ApiException(HttpStatus.BAD_REQUEST, List.of("Latitude cannot be greater than 90."));
         }
         if (conditionRequestVo.getLon().compareTo(BigDecimal.valueOf(180)) > 0) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, List.of("Error in input parameters"));
+            throw new ApiException(HttpStatus.BAD_REQUEST, List.of("Length cannot be greater than 180."));
         }
     }
 
