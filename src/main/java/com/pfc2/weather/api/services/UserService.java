@@ -22,6 +22,8 @@ public class UserService {
     private UserVo toUserVo(UserEntity entity) {
         return UserVo.builder()
                 .email(entity.getEmail())
+                .password(entity.getPassword())
+                .role(entity.getRole())
                 .build();
     }
 

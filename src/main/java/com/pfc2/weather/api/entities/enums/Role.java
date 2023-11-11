@@ -4,21 +4,20 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.pfc2.weather.api.entities.enums.Permission.*;
-
 @RequiredArgsConstructor
 @Getter
 public enum Role {
 
-    USER(Collections.emptySet()),
-    ADMIN(Collections.emptySet());
+    USER(List.of(Permission.ADMIN_READ)),
+    ADMIN(Arrays.asList(Permission.ADMIN_READ,Permission.ADMIN_UPDATE,Permission.ADMIN_CREATE,Permission.ADMIN_DELETE));
 
-    private final Set<Permission> permissions;
+    private final List<Permission> permissions;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
         var authorities = getPermissions()

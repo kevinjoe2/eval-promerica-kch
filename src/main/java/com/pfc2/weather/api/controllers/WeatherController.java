@@ -41,7 +41,7 @@ public class WeatherController {
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = @Content) })
     public ResponseEntity<BaseResponseVo<ConditionResponseVo>> find(
-            @Valid @RequestBody ConditionRequestVo conditionRequestVo){
+            @RequestBody @Valid ConditionRequestVo conditionRequestVo){
         log.info("*** WeatherController.findConditions {}", conditionRequestVo);
         this.findValidate(conditionRequestVo);
         ConditionResponseVo result = weatherService.findConditions(conditionRequestVo);

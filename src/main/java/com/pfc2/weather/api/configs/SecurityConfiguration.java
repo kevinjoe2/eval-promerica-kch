@@ -1,5 +1,6 @@
 package com.pfc2.weather.api.configs;
 
+import com.pfc2.weather.api.entities.enums.Permission;
 import com.pfc2.weather.api.exceptions.CustomAuthenticationFailureHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import static com.pfc2.weather.api.entities.enums.Role.ADMIN;
 import static com.pfc2.weather.api.entities.enums.Role.USER;
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -36,10 +38,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL).permitAll()
-                        .requestMatchers("/api/v1/auth/register").hasAnyRole(ADMIN.name())
                         .requestMatchers("/api/v1/weather").hasAnyRole(ADMIN.name(), USER.name())
-                        .requestMatchers("/api/v1/weather").hasAnyAuthority(ADMIN.name(), USER.name())
                         .requestMatchers("/api/v1/weather/**").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers("/api/v1/auth/register").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers(POST, "/api/v1/auth/register").hasAnyRole(Permission.ADMIN_CREATE.name())
+                        .requestMatchers(GET, "/api/v1/weather/history").hasAnyAuthority(Permission.ADMIN_READ.name(),  Permission.USER_READ.name())
+                        .requestMatchers(POST, "/api/v1/weather").hasAnyAuthority(Permission.ADMIN_CREATE.name(), Permission.ADMIN_CREATE.name())
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
