@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/v1/auth/register").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers(POST, "/api/v1/auth/register").hasAnyRole(Permission.ADMIN_CREATE.name())
                         .requestMatchers(GET, "/api/v1/weather/history").hasAnyAuthority(Permission.ADMIN_READ.name(),  Permission.USER_READ.name())
-                        .requestMatchers(POST, "/api/v1/weather").hasAnyAuthority(Permission.ADMIN_CREATE.name(), Permission.ADMIN_CREATE.name())
+                        .requestMatchers(POST, "/api/v1/weather").hasAnyAuthority(Permission.ADMIN_CREATE.name(), Permission.USER_CREATE.name())
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
