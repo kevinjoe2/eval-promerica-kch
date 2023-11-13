@@ -6,7 +6,7 @@ This API provides information such as maximum temperature, minimum temperature, 
 
 ### Requirements
 
-- Spring Boot 3.4.15
+- Spring Boot 3.1.5
 - Java 17
 - Gradle 7
 - Minikube or any cloud service with Kubernetes
