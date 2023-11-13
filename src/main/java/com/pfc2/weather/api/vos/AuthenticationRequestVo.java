@@ -8,8 +8,14 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * Vo for AuthenticationRequest
+ * @author jchamorro
+ * */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthenticationRequestVo implements Serializable {
 
     @Serial

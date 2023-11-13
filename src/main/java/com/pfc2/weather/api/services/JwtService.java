@@ -17,6 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Service for serialize and deserialize tokens.
+ * @author jchamorro
+ * */
 @Service
 public class JwtService {
 

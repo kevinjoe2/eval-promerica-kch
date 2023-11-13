@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
+/**
+ * Controller for authentication with api.
+ * @author jchamorro
+ * */
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor

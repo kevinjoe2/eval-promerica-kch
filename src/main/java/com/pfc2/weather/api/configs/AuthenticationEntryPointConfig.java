@@ -14,6 +14,10 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Allow to have a custom config for handle exception routes.
+ * @author jchamorro
+ * */
 @Slf4j
 public class AuthenticationEntryPointConfig implements AuthenticationEntryPoint {
 

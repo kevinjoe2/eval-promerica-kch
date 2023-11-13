@@ -18,6 +18,10 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+/**
+ * Config for authority paths.
+ * @author jchamorro
+ * */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor

@@ -14,6 +14,10 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Entity for save users.
+ * @author jchamorro
+ * */
 @Data
 @Builder
 @NoArgsConstructor

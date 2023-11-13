@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Controller for obtain weather.
+ * @author jchamorro
+ * */
 @RestController
 @RequestMapping(path = "/api/v1/weather")
 @Validated

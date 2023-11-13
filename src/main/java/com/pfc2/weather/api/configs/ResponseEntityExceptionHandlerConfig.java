@@ -12,6 +12,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Custom exception for api.
+ * */
 @RestControllerAdvice
 @Slf4j
 public class ResponseEntityExceptionHandlerConfig extends ResponseEntityExceptionHandler {

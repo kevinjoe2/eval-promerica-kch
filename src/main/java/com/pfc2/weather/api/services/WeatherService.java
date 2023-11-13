@@ -3,6 +3,7 @@ package com.pfc2.weather.api.services;
 import com.pfc2.weather.api.entities.WeatherHistoryEntity;
 import com.pfc2.weather.api.exceptions.ApiException;
 import com.pfc2.weather.api.repositories.WeatherRepository;
+import com.pfc2.weather.api.utils.ConstantUtil;
 import com.pfc2.weather.api.vos.ConditionRequestVo;
 import com.pfc2.weather.api.vos.ConditionResponseVo;
 import com.pfc2.weather.api.vos.WeatherApiResponseVo;
@@ -22,20 +23,18 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service for weather.
+ * @author jchamorro
+ * */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class WeatherService {
 
     private final WeatherRepository weatherRepository;
-
     private final RestTemplate restTemplate;
-
-    @Value("${application.open-weather.api-key}")
-    private String openWeatherApiKey;
-
-    @Value("${application.open-weather.uri}")
-    private String openWeatherUri;
+    private final ConstantUtil constantUtil;
 
     public ConditionResponseVo findConditions(ConditionRequestVo conditionRequestVo) {
         log.info("** WeatherService.findConditions {}", conditionRequestVo);
@@ -62,7 +61,10 @@ public class WeatherService {
         try {
             log.info("** WeatherService.findWeatherByLatAndLon connecting with open weather");
             response = restTemplate.getForEntity(
-                    String.format(openWeatherUri, conditionRequestVo.getLat(), conditionRequestVo.getLon(), openWeatherApiKey),
+                    String.format(constantUtil.getOpenWeatherUri(),
+                            conditionRequestVo.getLat(),
+                            conditionRequestVo.getLon(),
+                            constantUtil.getOpenWeatherApiKey()),
                     WeatherApiResponseVo.class
             );
         } catch (Exception ex) {

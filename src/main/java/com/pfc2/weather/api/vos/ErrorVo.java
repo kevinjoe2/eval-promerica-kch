@@ -6,8 +6,14 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Vo generic for ErrorVo
+ * @author jchamorro
+ * */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ErrorVo implements Serializable {
 
     @Serial

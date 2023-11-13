@@ -21,6 +21,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+/**
+ * Config for UserDetail Security, AuthenticationProvider, PasswordEncoder
+ * @author jchamorro
+ * */
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {

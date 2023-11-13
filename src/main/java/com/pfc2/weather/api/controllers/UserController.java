@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller for list users saved in database.
+ * @author jchamorro
+ * */
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor

@@ -7,6 +7,10 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Vo generic for BaseResponse
+ * @author jchamorro
+ * */
 @Data
 @Builder
 public class BaseResponseVo<T extends Serializable> implements Serializable {

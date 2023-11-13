@@ -8,6 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Enum for Roles
+ * @author jchamorro
+ * */
 @RequiredArgsConstructor
 @Getter
 public enum Role {

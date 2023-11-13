@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service for users.
+ * @author jchamorro
+ * */
 @Service
 @RequiredArgsConstructor
 public class UserService {

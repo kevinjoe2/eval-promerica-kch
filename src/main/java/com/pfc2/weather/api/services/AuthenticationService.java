@@ -24,6 +24,10 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * Service for authentication users.
+ * @author jchamorro
+ * */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {

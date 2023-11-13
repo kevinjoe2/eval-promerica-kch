@@ -3,6 +3,10 @@ package com.pfc2.weather.api.utils.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Enum for Permissions
+ * @author jchamorro
+ * */
 @RequiredArgsConstructor
 @Getter
 public enum Permission {

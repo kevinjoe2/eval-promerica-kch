@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+/**
+ * Repository for weather
+ * @author jchamorro
+ * */
 @Repository
 public interface WeatherRepository extends JpaRepository<WeatherHistoryEntity, String> {
 

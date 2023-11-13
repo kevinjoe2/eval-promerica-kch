@@ -8,6 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
+/**
+ * Allow to have auditing attributes for entity
+ * @author jchamorro
+ * */
 public class ApplicationAuditAware implements AuditorAware<UserEntity> {
 
     @Override

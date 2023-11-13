@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * Vo for AuthenticationResponse
+ * @author jchamorro
+ * */
 @Data
 @Builder
 @AllArgsConstructor

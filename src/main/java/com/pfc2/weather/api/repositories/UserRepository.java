@@ -7,10 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * Interface repository for UserEntity
- *
- * @author Joel Chamorro
- * @version 1.0.0
+ * Repository for users
+ * @author jchamorro
  * */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {

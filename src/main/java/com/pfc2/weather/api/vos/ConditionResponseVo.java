@@ -9,8 +9,14 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * Vo for ConditionResponse
+ * @author jchamorro
+ * */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ConditionResponseVo implements Serializable {
 
     @Serial

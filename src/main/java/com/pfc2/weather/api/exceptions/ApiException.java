@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+/**
+ * Custom exception api.
+ * @author jchamorro
+ * */
 @RequiredArgsConstructor
 @Getter
 @Setter

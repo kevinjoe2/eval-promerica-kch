@@ -17,10 +17,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Objects;
 
-import static com.pfc2.weather.api.utils.ConstantUtil.NUMBER_START_AUTH_TOKEN;
-
+/**
+ * Allow to have a filter additional to validate JWT token
+ * @author jchamorro
+ * */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {

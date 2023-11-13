@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository for token.
+ * @author jchamorro
+ * */
 @Repository
 public interface TokenRepository extends JpaRepository<TokenEntity, String> {
 

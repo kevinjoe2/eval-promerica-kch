@@ -11,6 +11,10 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * Vo for ConditionRequest
+ * @author jchamorro
+ * */
 @Data
 @Builder
 @AllArgsConstructor

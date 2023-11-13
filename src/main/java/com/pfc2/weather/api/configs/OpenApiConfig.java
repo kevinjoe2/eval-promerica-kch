@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+/**
+ * Config for Open Api, security with Bearer token.
+ * */
 @Configuration
 public class OpenApiConfig {
 

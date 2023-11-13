@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller por redirect errors.
+ * @author jchamorro
+ * */
 @RestController
 @RequestMapping("errors")
 public class ErrorController {
