@@ -1,4 +1,4 @@
-package com.pfc2.weather.api.controllers;
+package com.pfc2.weather.api.configs;
 
 import com.pfc2.weather.api.exceptions.ApiException;
 import com.pfc2.weather.api.vos.ErrorVo;
@@ -14,11 +14,11 @@ import java.util.Objects;
 
 @RestControllerAdvice
 @Slf4j
-public class AdviceController extends ResponseEntityExceptionHandler {
+public class ResponseEntityExceptionHandlerConfig extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorVo> handleApiException(ApiException apiException) {
-        log.error("*** AdviceController.handleApiException", apiException);
+        log.error("*** ResponseEntityExceptionHandlerConfig.handleApiException", apiException);
         return ResponseEntity.badRequest().body(ErrorVo.builder()
                 .code(apiException.getHttpStatus().getReasonPhrase())
                 .errors(apiException.getMessages())
@@ -27,7 +27,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorVo> handleExpiredJwtException(RuntimeException runtimeException) {
-        log.error("*** AdviceController.handleExpiredJwtException", runtimeException);
+        log.error("*** ResponseEntityExceptionHandlerConfig.handleExpiredJwtException", runtimeException);
         if (runtimeException.getCause() instanceof ApiException apiException) {
             return ResponseEntity.badRequest().body(ErrorVo.builder()
                     .code(apiException.getHttpStatus().getReasonPhrase())
@@ -43,7 +43,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorVo> handleException(Exception exception) {
-        log.error("*** AdviceController.handleException", exception);
+        log.error("*** ResponseEntityExceptionHandlerConfig.handleException", exception);
         if (exception.getCause() instanceof ApiException apiException) {
             return ResponseEntity.badRequest().body(ErrorVo.builder()
                     .code(apiException.getHttpStatus().getReasonPhrase())

@@ -1,8 +1,7 @@
 package com.pfc2.weather.api;
 
-import com.pfc2.weather.api.entities.enums.Role;
+import com.pfc2.weather.api.utils.enums.Role;
 import com.pfc2.weather.api.services.AuthenticationService;
-import com.pfc2.weather.api.vos.AuthenticationResponseVo;
 import com.pfc2.weather.api.vos.RegisterRequestVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;

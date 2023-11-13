@@ -3,7 +3,7 @@ package com.pfc2.weather.api.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfc2.weather.api.entities.TokenEntity;
 import com.pfc2.weather.api.entities.UserEntity;
-import com.pfc2.weather.api.entities.enums.TokenType;
+import com.pfc2.weather.api.utils.enums.TokenType;
 import com.pfc2.weather.api.exceptions.ApiException;
 import com.pfc2.weather.api.repositories.TokenRepository;
 import com.pfc2.weather.api.repositories.UserRepository;
@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -39,7 +40,9 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
+                .createdDate(Instant.now())
                 .build();
+        user.setCreateBy(user);
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);

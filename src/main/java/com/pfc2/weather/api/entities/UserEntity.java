@@ -1,14 +1,16 @@
 package com.pfc2.weather.api.entities;
 
-import com.pfc2.weather.api.entities.enums.Role;
+import com.pfc2.weather.api.utils.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,6 +43,14 @@ public class UserEntity implements UserDetails, Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<TokenEntity> tokens;
+
+    @CreatedBy
+    @OneToOne
+    @JoinColumn(name = "create_by", nullable = false)
+    private UserEntity createBy;
+
+    @CreatedDate
+    private Instant createdDate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

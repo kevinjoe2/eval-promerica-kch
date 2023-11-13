@@ -1,6 +1,7 @@
 package com.pfc2.weather.api.configs;
 
 import com.pfc2.weather.api.auditing.ApplicationAuditAware;
+import com.pfc2.weather.api.entities.UserEntity;
 import com.pfc2.weather.api.exceptions.ApiException;
 import com.pfc2.weather.api.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public AuditorAware<String> auditorAware() {
+    public AuditorAware<UserEntity> auditorAware() {
         return new ApplicationAuditAware();
     }
 

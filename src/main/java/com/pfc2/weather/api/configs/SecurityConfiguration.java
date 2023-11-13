@@ -1,7 +1,6 @@
 package com.pfc2.weather.api.configs;
 
-import com.pfc2.weather.api.entities.enums.Permission;
-import com.pfc2.weather.api.exceptions.CustomAuthenticationFailureHandler;
+import com.pfc2.weather.api.utils.enums.Permission;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +12,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.pfc2.weather.api.entities.enums.Role.ADMIN;
-import static com.pfc2.weather.api.entities.enums.Role.USER;
+import static com.pfc2.weather.api.utils.enums.Role.ADMIN;
+import static com.pfc2.weather.api.utils.enums.Role.USER;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -49,7 +48,8 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling(abc -> abc
-                .authenticationEntryPoint(new CustomAuthenticationFailureHandler())
+                .authenticationEntryPoint(new AuthenticationEntryPointConfig())
+                .accessDeniedPage("/errors/access-denied")
         );
         return http.build();
     }

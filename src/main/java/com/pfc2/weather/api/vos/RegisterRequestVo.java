@@ -1,10 +1,8 @@
 package com.pfc2.weather.api.vos;
 
-import com.pfc2.weather.api.entities.enums.Role;
-import lombok.AllArgsConstructor;
+import com.pfc2.weather.api.utils.enums.Role;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;

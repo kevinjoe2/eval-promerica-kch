@@ -1,11 +1,12 @@
 package com.pfc2.weather.api.entities;
 
-import com.pfc2.weather.api.entities.enums.TokenType;
+import com.pfc2.weather.api.utils.enums.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "tokens")
+@EntityListeners(AuditingEntityListener.class)
 public class TokenEntity implements Serializable {
 
     @Serial

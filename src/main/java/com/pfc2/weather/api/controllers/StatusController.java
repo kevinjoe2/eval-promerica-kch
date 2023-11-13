@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/sys")
 @Slf4j
-public class SysController {
+public class StatusController {
 
     @GetMapping(path = "status")
     public ResponseEntity<BaseResponseVo<String>> status(){

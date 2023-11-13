@@ -1,4 +1,4 @@
-package com.pfc2.weather.api.entities.enums;
+package com.pfc2.weather.api.utils.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
