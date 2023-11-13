@@ -28,3 +28,32 @@ This API provides information such as maximum temperature, minimum temperature, 
 - To test the API, you can find a Postman file `eval-promerica.postman_collection.json` in the root repository. This file includes curl commands to check the API.
 - Authentication is based on a bearer token.
 - By default, there is a user with email: `joel@hotmail.com` and password: `password`, with the role `ADMIN` providing access to all endpoints.
+- For generate token with user joel@hotmail.com (role ADMIN) use this endpoint: `
+``curl --location 'http://localhost:8080/api/v1/auth/authenticate' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "joel@hotmail.com",
+    "password": "password"
+}'``
+- For create new user you have authenticate with user ADMIN, use this endpoint (Use your token): `
+``curl --location 'http://localhost:8080/api/v1/auth/register' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2VsQGhvdG1haWwuY29tIiwiaWF0IjoxNjk5ODU4MDg0LCJleHAiOjE2OTk4NjE2ODR9.MyCmkZY1ST1XT89Ot5FRuaQ82SEPDsnil6D5VliRfs0' \
+--data-raw '{
+    "firstname": "Joel",
+    "lastname": "Chamorro",
+    "email": "joel@hotmail.com",
+    "password": "password",
+    "role": "ADMIN"
+}'``
+- For get weather use this endpoint (Use your token): `
+``curl --location 'http://localhost:8080/api/v1/weather' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2VsQGhvdG1haWwuY29tIiwiaWF0IjoxNjk5ODU4MDg0LCJleHAiOjE2OTk4NjE2ODR9.MyCmkZY1ST1XT89Ot5FRuaQ82SEPDsnil6D5VliRfs0' \
+--data '{
+    "lat": -0.19263346869805648,
+    "lon": -78.51194278681906
+}'``
+- For get weather history use this endpoint (Use your token):
+``curl --location 'http://localhost:8080/api/v1/weather/history' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2VsQGhvdG1haWwuY29tIiwiaWF0IjoxNjk5ODU4MDg0LCJleHAiOjE2OTk4NjE2ODR9.MyCmkZY1ST1XT89Ot5FRuaQ82SEPDsnil6D5VliRfs0'``
