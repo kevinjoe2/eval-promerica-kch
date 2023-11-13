@@ -24,7 +24,7 @@ This API provides information such as maximum temperature, minimum temperature, 
    - `kechodev/eval_promerica_kch_db:latest`
 
 ### Testing the API
-
+- Exist available version publish in http://157.230.202.86:8080
 - To test the API, you can find a Postman file `eval-promerica.postman_collection.json` in the root repository. This file includes curl commands to check the API.
 - Authentication is based on a bearer token.
 - By default, there is a user with email: `joel@hotmail.com` and password: `password`, with the role `ADMIN` providing access to all endpoints.
