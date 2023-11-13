@@ -5,6 +5,7 @@ kind: Service
 metadata:
   name: service-kch
 spec:
+  type: LoadBalancer
   ports:
     - port: 8080
       targetPort: 8080
@@ -19,46 +20,50 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: eval-promerica-kch-db-deployment
+  name: eval-promerica-kch-deployment
   labels:
-    app: eval-promerica-kch-db
+    app: eval-promerica-kch
 spec:
   selector:
     matchLabels:
-      app: eval-promerica-kch-db
+      app: eval-promerica-kch
   replicas: 1
   template:
     metadata:
       labels:
-        app: eval-promerica-kch-db
+        app: eval-promerica-kch
         role: service-kch
     spec:
       containers:
-        - name: nginx
-          image: kechodev/eval-promerica-kch-db:latest
+        - name: evalpromericakchdb
+          image: kechodev/eval_promerica_kch_db:latest
           ports:
             - containerPort: 5432
----
-# Deployment API
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: eval-promerica-kch-api-deployment
-  labels:
-    app: eval-promerica-kch-api
-spec:
-  selector:
-    matchLabels:
-      app: eval-promerica-kch-api
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: eval-promerica-kch-api
-        role: service-kch
-    spec:
-      containers:
-        - name: nginx
-          image: kechodev/eval-promerica-kch-api:latest
+        - name: evalpromericakchapi
+          image: kechodev/eval_promerica_kch_api:latest
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              memory: "200Mi"
+            limits:
+              memory: "300Mi"
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: eval-promerica-kch-as
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: eval-promerica-kch-deployment
+  minReplicas: 1
+  maxReplicas: 2
+  metrics:
+    - type: Resource
+      resource:
+        name: ram
+        target:
+          type: Utilization
+          averageUtilization: 80

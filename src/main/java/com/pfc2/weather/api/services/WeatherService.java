@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +39,10 @@ public class WeatherService {
 
     public ConditionResponseVo findConditions(ConditionRequestVo conditionRequestVo) {
         log.info("** WeatherService.findConditions {}", conditionRequestVo);
-        Optional<WeatherHistoryEntity> weatherEntity = weatherRepository.findByLatAndLon(conditionRequestVo.getLat(), conditionRequestVo.getLon());
+        conditionRequestVo.setLat(conditionRequestVo.getLat().setScale(4, RoundingMode.HALF_UP));
+        conditionRequestVo.setLon(conditionRequestVo.getLon().setScale(4, RoundingMode.HALF_UP));
+        Optional<WeatherHistoryEntity> weatherEntity = weatherRepository.findByLatAndLon(
+                conditionRequestVo.getLat(), conditionRequestVo.getLon());
         LocalDateTime currentDateTimeMinus10Minutes = LocalDateTime.now().minusMinutes(10);
         if (weatherEntity.isPresent() && weatherEntity.get().getCreated().isAfter(currentDateTimeMinus10Minutes)) {
             log.info("** WeatherService.findConditions find weather in data base available");
@@ -85,8 +89,8 @@ public class WeatherService {
                     .tempMax(BigDecimal.valueOf(apiResponseVo.getMain().getTemp_max()))
                     .tempMin(BigDecimal.valueOf(apiResponseVo.getMain().getTemp_min()))
                     .humidity(BigDecimal.valueOf(apiResponseVo.getMain().getHumidity()))
-                    .lat(BigDecimal.valueOf(apiResponseVo.getCoord().getLat()))
-                    .lon(BigDecimal.valueOf(apiResponseVo.getCoord().getLon()))
+                    .lat(BigDecimal.valueOf(apiResponseVo.getCoord().getLat()).setScale(4, RoundingMode.HALF_UP))
+                    .lon(BigDecimal.valueOf(apiResponseVo.getCoord().getLon()).setScale(4, RoundingMode.HALF_UP))
                     .build();
         }
         log.error("Error mapToWeatherHistoryEntity");

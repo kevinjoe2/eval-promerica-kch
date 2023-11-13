@@ -25,7 +25,9 @@ public class WeatherHistoryEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(precision = 6, scale = 4)
     private BigDecimal lat;
+    @Column(precision = 7, scale = 4)
     private BigDecimal lon;
     private String weather;
     private BigDecimal tempMin;
